@@ -22,7 +22,7 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   width: 100vw;
-  height: 100vh;
+  /*height: 100vh;*/
 }
 #app {
   font-family: 'Adrianna', Helvetica, Arial, sans-serif;
