@@ -45,7 +45,7 @@
       </g>
     </svg>
   </div>
-  <div class="maze" v-bind:class="{'maze-removed' : mazeRemoved, 'maze-animation' : mazeAnimation}">
+  <div class="maze" v-bind:class="{'maze-removed' : mazeRemoved, 'maze-animation' : mazeAnimation, 'maze-transition' : mazeTransition}">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 689.53 707.07">
       <title>Maze</title>
       <g id="Maze">
@@ -95,7 +95,7 @@
           <path class="cls-1" d="M331.22,238.59a107.5,107.5,0,1,1-28.84,7.83"/>
         </g>
         <path id="Start_Arrow" data-name="Start Arrow" class="cls-3 arrow" v-bind:class="{'start-arrow' : startArrowAnimated}" v-on:click="showHiddenElement('start-arrow')" d="M525.67,641.19a288.34,288.34,0,0,1,16.2,25.66c.53.94,3.29,1.14,3.32-.27a64.21,64.21,0,0,0-.84-11.69,576.06,576.06,0,0,1,55.33,51.76c.87.92,4.1.23,2.92-1a576.37,576.37,0,0,0-58-53.91,31,31,0,0,0,9.57-5.25c.88-.7-.53-1.38-1-1.49q-12.69-3.13-25.59-5.27C526.72,639.56,524.85,640,525.67,641.19Zm14.66,10.34a62.91,62.91,0,0,1,1.3,8.71q-5.46-9.21-11.59-18,10,1.77,20,4.14a27.25,27.25,0,0,1-8.17,3.91C540.94,650.27,540.12,650.59,540.33,651.53Z"/>
-        <g id="finish_text" data-name="finish text" class="finish-text" v-bind:class="{'finish-text-hidden ' : finishText, 'animated-finished-text' : animatedFinishedText}" v-on:click="showHiddenElement('finish-text')">
+        <g id="finish_text" data-name="finish text" class="finish-text" v-bind:class="{'finish-text-hidden ' : finishText, 'animated-finished-text' : animatedFinishedText}" v-on:click="showHiddenElement('finish-text'); playMusic()">
           <path class="finish-text" d="M289.34,331.53h1.29v23.78h3.51v-9h8.38v-1.18h-8.35v-1.29h9.64v3.76h-8.38v9h-6.09Zm2.4,0h13.82v6.08h-8.95v-1.28h7.66v-3.51H293V354.3h-1.25Zm2.4,2.32h9v1.29h-7.73v6.34h8.38v1.33h-9.67Z"/>
           <path class="finish-text" d="M310.22,331.53H314V354.2h-1.29V332.82h-1.18v22.49h3.61V331.53h1.29V356.6h-6.19Z"/>
           <path class="finish-text" d="M320.35,356.6v-24l18.41,18.58v1.9l-17.15-17.4v21ZM337.47,334h1.29v15.51l-17.73-18h1.79l14.65,14.86Zm-2.47,8.1v-10.6h6.23V356.6h-2.29l-14.86-14.9v13.61h1.14V344.67l1.33,1.36V356.6h-3.76V338.55l16.4,16.61.14.15h.61V332.78h-3.65v10.74Z"/>
@@ -261,7 +261,8 @@
       </g>
     </svg>
   </div>
-  <div class="surprise-wrapper" v-bind:class="{'surprise-hidden' : surpriseRemoved, 'surprise-opacity' : surpriseRemoved}">
+  <div class="surprise-wrapper" v-bind:class="{'surprise-hidden' : surpriseRemoved, 'surprise-opacity' : surpriseRemoved, 'final-section-transition' : finalSectionTransition}">
+    <div class="final-message"><h2>Thanks for helping me learn so much this year. Love you!</h2></div>
     <svg class="merry-christmas-svg">
       <defs>
         <mask id="mask" x="0" y="0" width="100%" height="100%">
@@ -323,6 +324,9 @@
       ❆
     </div>
   </div>
+    <audio id="farrenMusic">
+      <source src="../assets/farren.mp3" type="audio/mpeg">
+    </audio>
   </div>
 </div>
 
@@ -336,48 +340,50 @@ export default {
   },
   data: function () {
   const mazeDirections = {
-    'start-arrow' : ['arrowA1Hidden', 'arrow1Hidden','startArrowAnimated'],
-    'arrow1' : ['sadFace1Hidden', '',''],
-    'arrowA1' : ['arrowA2Hidden', 'arrow2Hidden',''],
-    'arrow2' : ['sadFace2Hidden', '',''],
-    'arrowA2' : ['arrowA3Hidden', 'arrow3Hidden',''],
-    'arrow3' : ['sadFace3Hidden', '',''],
-    'arrowA3' : ['arrowA4Hidden', '',''],
-    'arrowA4' : ['arrowA5Hidden', 'arrow4Hidden',''],
-    'arrow4' : ['sadFace4Hidden', '',''],
-    'arrowA5' : ['arrowA6Hidden', 'arrow5Hidden',''],
-    'arrow5' : ['arrow5bHidden', '',''],
-    'arrow5b' : ['sadFace5Hidden', '',''],
-    'arrowA6' : ['arrowA7Hidden', 'arrow6Hidden',''],
-    'arrow6' : ['arrow7Hidden', 'arrow9Hidden','arrow8Hidden'],
-    'arrow7' : ['sadFace7Hidden', '',''],
-    'arrow9' : ['sadFace9Hidden', '',''],
-    'arrowA7' : ['arrowA8Hidden', 'arrow10Hidden','arrowB5Hidden'],
-    'arrow10' : ['arrow11Hidden', 'arrow12Hidden',''],
-    'arrow11' : ['sadFace11Hidden', '',''],
-    'arrow12' : ['arrow13Hidden', 'arrow14Hidden',''],
-    'arrow13' : ['sadFace13Hidden', '',''],
-    'arrow14' : ['sadFace14Hidden', '',''],
-    'arrowA8' : ['arrowA9Hidden', 'arrow17Hidden',''],
-    'arrow17' : ['sadFace17Hidden', '',''],
-    'arrowA9' : ['arrowA10Hidden', '', ''],
-    'arrowA10' : ['arrowA11Hidden', '', ''],
-    'arrowB5' : ['arrowB4Hidden', '', ''],
-    'arrowB4' : ['arrowB3Hidden', 'arrowC2Hidden', ''],
-    'arrowB3' : ['arrowB2Hidden', '', ''],
-    'arrowB2' : ['arrowB1Hidden', '', ''],
-    'arrowB1' : ['arrow16Hidden', 'arrowA10Hidden', ''],
-    'arrow16' : ['sadFace16Hidden', '',''],
-    'arrowC2' : ['arrowC1Hidden', 'arrow15Hidden', ''],
-    'arrow15' : ['sadFace15Hidden', '',''],
-    'arrowC1' : ['arrowB2Hidden', '', ''],
-    'arrow8' : ['sadFace8Hidden', '',''],
-    'arrowA11' : ['finishText', 'animatedFinishedText', ''],
-    'welcome-message' : ['mazeAnimation', 'welcomeHidden', 'mazeRemoved'],
-    'finish-text' : ['mazeRemoved', 'surpriseRemoved', 'welcomeRemoved']
+    'start-arrow' : ['arrowA1Hidden', 'arrow1Hidden','startArrowAnimated', ''],
+    'arrow1' : ['sadFace1Hidden', '','', ''],
+    'arrowA1' : ['arrowA2Hidden', 'arrow2Hidden','', ''],
+    'arrow2' : ['sadFace2Hidden', '','', ''],
+    'arrowA2' : ['arrowA3Hidden', 'arrow3Hidden','', ''],
+    'arrow3' : ['sadFace3Hidden', '','', ''],
+    'arrowA3' : ['arrowA4Hidden', '','', ''],
+    'arrowA4' : ['arrowA5Hidden', 'arrow4Hidden','', ''],
+    'arrow4' : ['sadFace4Hidden', '','', ''],
+    'arrowA5' : ['arrowA6Hidden', 'arrow5Hidden','', ''],
+    'arrow5' : ['arrow5bHidden', '','', ''],
+    'arrow5b' : ['sadFace5Hidden', '','', ''],
+    'arrowA6' : ['arrowA7Hidden', 'arrow6Hidden','', ''],
+    'arrow6' : ['arrow7Hidden', 'arrow9Hidden','arrow8Hidden', ''],
+    'arrow7' : ['sadFace7Hidden', '','', ''],
+    'arrow9' : ['sadFace9Hidden', '','', ''],
+    'arrowA7' : ['arrowA8Hidden', 'arrow10Hidden','arrowB5Hidden', ''],
+    'arrow10' : ['arrow11Hidden', 'arrow12Hidden','', ''],
+    'arrow11' : ['sadFace11Hidden', '','', ''],
+    'arrow12' : ['arrow13Hidden', 'arrow14Hidden','', ''],
+    'arrow13' : ['sadFace13Hidden', '','', ''],
+    'arrow14' : ['sadFace14Hidden', '','', ''],
+    'arrowA8' : ['arrowA9Hidden', 'arrow17Hidden','', ''],
+    'arrow17' : ['sadFace17Hidden', '','', ''],
+    'arrowA9' : ['arrowA10Hidden', '', '', ''],
+    'arrowA10' : ['arrowA11Hidden', '', '', ''],
+    'arrowB5' : ['arrowB4Hidden', '', '', ''],
+    'arrowB4' : ['arrowB3Hidden', 'arrowC2Hidden', '', ''],
+    'arrowB3' : ['arrowB2Hidden', '', '', ''],
+    'arrowB2' : ['arrowB1Hidden', '', '', ''],
+    'arrowB1' : ['arrow16Hidden', 'arrowA10Hidden', '', ''],
+    'arrow16' : ['sadFace16Hidden', '','', ''],
+    'arrowC2' : ['arrowC1Hidden', 'arrow15Hidden', '', ''],
+    'arrow15' : ['sadFace15Hidden', '','', ''],
+    'arrowC1' : ['arrowB2Hidden', '', '', ''],
+    'arrow8' : ['sadFace8Hidden', '','', ''],
+    'arrowA11' : ['finishText', 'animatedFinishedText', ', '],
+    'welcome-message' : ['mazeAnimation', 'welcomeHidden', 'mazeRemoved', ''],
+    'finish-text' : ['mazeTransition', 'surpriseRemoved', 'welcomeRemoved', 'finalSectionTransition']
   };
+  const farren = document.getElementById("farrenMusic");
    return {
    mazeDirections,
+   farren,
    arrowA1Hidden : true,
    arrow1Hidden : true,
    sadFace1Hidden : true,
@@ -436,6 +442,8 @@ export default {
    mazeRemoved : true,
    surpriseRemoved : true,
    welcomeRemoved : false,
+   mazeTransition : false,
+   finalSectionTransition : false,
    '' : true
    }
   },
@@ -444,6 +452,9 @@ export default {
       this.mazeDirections[className].forEach((value) => {
         this[value] = !this[value];
       })
+    },
+    playMusic: function () {
+      this.farren.play();
     }
   }
 }
@@ -456,24 +467,8 @@ h1 {
   font-weight: 100;
   font-size: 3rem;
 }
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-ol {
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 10px;
-  font-size: 2rem;
-}
-a {
-  color: #42b983;
-}
+
+/*Welcome Section*/
 
 .welcome-message-wrapper {
   width: 90%;
@@ -485,12 +480,12 @@ a {
 }
 .welcome-mesg {
   width: 40%;
-    fill:none;
-    stroke:#fff;
-    stroke-miterlimit:10;
+  fill:none;
+  stroke:#fff;
+  stroke-miterlimit:10;
   stroke-dasharray: 1000;
   stroke-dashoffset: 1000;
-    animation: dash 5s linear forwards;
+  animation: dash 5s linear forwards;
 }
 
 .welcome-removed {
@@ -509,7 +504,9 @@ a {
   cursor: pointer;
   opacity: 1;
 }
+.msg-arrow{fill:#fff;}
 
+/*Maze Section*/
 .maze-wrapper {
   display: flex;
   flex-direction: column;
@@ -520,11 +517,6 @@ a {
   height: 100vh;
 }
 
-.instructions-sad-face {
-  width: 2rem;
-  height: auto;
-}
-
 .maze{
   width: 50%;
 }
@@ -533,12 +525,12 @@ a {
   animation: spin 2s linear forwards;
 }
 
-.maze-removed {
-  display: none;
+.maze-transition {
+  animation: spinBackwards 2s linear forwards;
 }
 
-.start-arrow {
-  animation: showArrow 3s linear forwards;
+.maze-removed {
+  display: none;
 }
 
 .arrow {
@@ -575,10 +567,10 @@ a {
 .cls-4
 {stroke-miterlimit:10;}
 
-.msg-arrow{fill:#fff;}
-
 .finish-text {
   fill:#fff;
+  transition: all ease-in-out 1s;
+  animation: pulse 1s ease-in-out infinite;
 }
 
 .finish-text-hidden {
@@ -594,21 +586,35 @@ a {
 
 .finish-text:hover {
   cursor: pointer;
+  animation: none;
 }
 
+/*Surprise Section */
+
+.final-section-transition {
+  animation: showFinalSection 1s ease-out 2s forwards;
+}
 .surprise-hidden {
   display: none;
 }
-
 .surprise-opacity {
   opacity: 0;
 }
-
 .surprise-wrapper {
-  opacity: 1;
+  opacity: 0;
   width: 100%;
+  position: relative;
+  transition: all 6s linear;
 }
-
+.final-message {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  color: #44548A;
+  text-align: right;
+  font-family:Eds Market Bold Script, cursive;
+  width: 20%;
+}
 .merry-christmas-svg {
   background-image: url("../assets/snowscape-2.svg");
   background-size: cover;
@@ -619,12 +625,13 @@ a {
 }
 .christmas-text{
   font-size: 10rem;
-  transition:font-size .4s ease-out;
+  transition:all .4s ease-out;
   font-weight:900;
-  font-family:Eds Market Bold Script;
+  font-family:Eds Market Bold Script, cursive;
 }
 .merry-christmas-svg:hover text{
   transition:all .4s ease-in;
+  transform: translateY(900px);
   font-size: 500rem;
 }
 
@@ -715,6 +722,52 @@ a {
   animation-delay:4s,2.5s
 }
 
+/*Keyframes*/
+
+/*Welcome Section*/
+@keyframes dash {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes clickMe {
+  50% {
+    transform: translateX(20px);
+  }
+}
+/*Maze Section*/
+@keyframes spin {
+  from {
+    transform:rotate(0deg) scale(0.05);
+    opacity: 0;
+  }
+  to {
+    transform:rotate(360deg) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes spinBackwards {
+  from {
+    transform:rotate(360deg) scale(1);
+    opacity: 1;
+    height: 100vh;
+  }
+  to {
+    transform:rotate(0deg) scale(0.05);
+    opacity: 0;
+    height: 0;
+  }
+}
+
+@keyframes pulse {
+  50% {
+    transform: translateY(5px);
+  }
+}
+
+/*Surprise Section*/
 @-webkit-keyframes snowflakes-fall {
   0% {
     top: -10%
@@ -750,30 +803,7 @@ a {
   }
 }
 
-@keyframes dash {
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
-@keyframes clickMe {
-  50% {
-    transform: translateX(20px);
-  }
-}
-
-@keyframes spin {
-  from {
-    transform:rotate(0deg) scale(0.05);
-    opacity: 0;
-  }
-  to {
-    transform:rotate(360deg) scale(1);
-    opacity: 1;
-  }
-}
-
-@keyframes showArrow {
+@keyframes showFinalSection {
   from {
     opacity: 0;
   }
