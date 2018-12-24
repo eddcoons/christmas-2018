@@ -324,7 +324,7 @@
       ❆
     </div>
   </div>
-    <audio id="farrenMusic">
+    <audio id="farrenMusic" src="../assets/farren.mp3" autoplay loop preload="auto">
       <source src="../assets/farren.mp3" type="audio/mpeg">
     </audio>
   </div>
@@ -454,6 +454,7 @@ export default {
       })
     },
     playMusic: function () {
+    console.log(this.farren);
       this.farren.play();
     }
   }
